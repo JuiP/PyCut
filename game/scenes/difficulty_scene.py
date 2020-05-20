@@ -4,6 +4,10 @@ Difficulty Scene Module
 import pygame
 from game.objects import Text, Button, STATE
 from . import SceneBase
+from gi.repository import Gdk
+
+SCALE_X = Gdk.Screen.width() / 1200
+SCALE_Y = Gdk.Screen.height() / 900
 
 class DifficultyScene(SceneBase):
     """
@@ -72,7 +76,7 @@ class DifficultyScene(SceneBase):
         self.title.setColor((244, 101, 36))
         self.title.setPen(self.context.bold_font_large)
         self.title.centered = True
-        self.title.setLocation( self.context.width / 2, 300)
+        self.title.setLocation( self.context.width / 2, 300 * SCALE_Y)
 
     def createEasyButton(self):
         """

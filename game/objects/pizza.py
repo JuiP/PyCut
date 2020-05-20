@@ -2,6 +2,10 @@ import pygame
 from pygame import gfxdraw
 from .rangable import Rangable
 import random
+from gi.repository import Gdk
+
+SCALE_X = Gdk.Screen.width() / 1200
+SCALE_Y = Gdk.Screen.height() / 900
 
 class Pizza(Rangable):
     """docstring for Pizza"""
@@ -17,11 +21,11 @@ class Pizza(Rangable):
         self.slices = None
         self.offset = random.randint(0,4)
         self.color=(0,0,0)
-        self.x = 100
-        self.y = 400 # 5=> margin between top and pizza
+        self.x = 100 * SCALE_X
+        self.y = 400 * SCALE_Y # 5=> margin between top and pizza
         self.location = (self.x,self.y)
-        self.width = 150
-        self.height = 150
+        self.width = 150 * SCALE_X
+        self.height = 150 * SCALE_Y
         self.toppings = [0, 0, 0, 0]
         self.requirements = []
         self.potentalClues = []
@@ -99,7 +103,7 @@ class Pizza(Rangable):
                 self.trash_pos = trash_pos
                 self.trash_can = pygame.Rect((trash_pos[0], trash_pos[1]+self.height), (trash_can.get_width(), trash_can.get_height()))
                 self.trashing = True
-                self.setLocation(trash_pos[0] + 50, 200)
+                self.setLocation(trash_pos[0] + (50 * SCALE_X), 200 * SCALE_Y)
             else:
                 print("Error: expected a trash_pos, trash_can got {}, {}".format(trash_pos, trash_can))
 

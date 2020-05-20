@@ -1,6 +1,8 @@
 import pygame
 import traceback
 import os
+import gi
+from gi.repository import Gdk
 
 from . import scenes, events, objects
 
@@ -16,8 +18,8 @@ class PyCutGame():
         #pygame.font.init()
         #pygame.mixer.init(44100)
         ########################
-        self.width = 1200
-        self.height = 900
+        self.width = Gdk.Screen.width()
+        self.height = Gdk.Screen.height()
         self.fps = 15
         self.title = "PyCut"
         self.quit_attempt = False

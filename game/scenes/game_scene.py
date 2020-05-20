@@ -6,6 +6,10 @@ import pygame
 from game.objects import STATE, Text, Button, Pizza, MessageBubble, Toggle
 from . import SceneBase
 import cProfile
+from gi.repository import Gdk
+
+SCALE_X = Gdk.Screen.width() / 1200
+SCALE_Y = Gdk.Screen.height() / 900
 
 class GameScene(SceneBase):
     """
@@ -51,19 +55,19 @@ class GameScene(SceneBase):
         self.pizza_count_msg = Text(self.context, "{} Pizzas left".format(len(self.pizzas)))
         self.pizza_count_msg.setPen(self.context.font)
         self.pizza_count_msg.setColor((0, 0, 0))
-        self.pizza_count_msg.setLocation(350, 675)
+        self.pizza_count_msg.setLocation(350 * SCALE_X, 675 * SCALE_Y)
 
         self.game_over_msg = Text(self.context, "Game Over!!!")
         self.game_over_msg.centered = True
         self.game_over_msg.setPen(self.context.bold_font_large)
         self.game_over_msg.setColor((255, 140, 0))
-        self.game_over_msg.setLocation( self.context.width / 2, 300)
+        self.game_over_msg.setLocation( self.context.width / 2, 300 * SCALE_Y)
 
         self.level_up_msg = Text(self.context, "New Level reached")
         self.level_up_msg.centered = True
         self.level_up_msg.setPen(self.context.bold_font_large)
         self.level_up_msg.setColor((255, 140, 0))
-        self.level_up_msg.setLocation(self.context.width/2, 300)
+        self.level_up_msg.setLocation(self.context.width / 2, 300 * SCALE_Y)
 
         self.continue_button = Button(self.context, "continue")
         self.continue_button.setBackgroundImg(self.context.button_bg, STATE.NORMAL)
@@ -85,12 +89,12 @@ class GameScene(SceneBase):
         self.static_surface.fill((244, 101, 36))
         self.static_surface.blit(self.context.shop_background,(0,0))
         if self.context.difficulty == "Advanced":
-            self.static_surface.blit(self.characters[0],(150,255))
-            self.static_surface.blit(self.characters[1],(594,255))
-            self.static_surface.blit(self.characters[2],(150,380))
-            self.static_surface.blit(self.characters[3],(594,380))
+            self.static_surface.blit(self.characters[0],(150 * SCALE_X,255 * SCALE_Y))
+            self.static_surface.blit(self.characters[1],(594 * SCALE_X,255 * SCALE_Y))
+            self.static_surface.blit(self.characters[2],(150 * SCALE_X,380 * SCALE_Y))
+            self.static_surface.blit(self.characters[3],(594 * SCALE_X,380 * SCALE_Y))
         else:
-            self.static_surface.blit(self.characters[self.level% len(self.characters)],(850,255))
+            self.static_surface.blit(self.characters[self.level% len(self.characters)],(850 * SCALE_X, 255 * SCALE_Y))
         self.static_surface.blit(self.context.counter_top,(0,0))
         
         pygame.display.flip()
@@ -171,7 +175,7 @@ class GameScene(SceneBase):
             for text in self.texts:
                 text.drawOn(self.screen)
                 
-        self.screen.blit(self.trashCanBack, (1000, 600))
+        self.screen.blit(self.trashCanBack, (1000 * SCALE_X, 600 * SCALE_Y))
         #draw pizzas in the trash can
         for pizza in self.bad_pizzas:
             pizza.drawOn(self.screen)
@@ -179,7 +183,7 @@ class GameScene(SceneBase):
         for pizza in self.pizzas:
             pizza.drawOn(self.screen)
         self.pizza_count_msg.drawOn(self.screen)
-        self.screen.blit(self.trashCanFront, (1000, 600))
+        self.screen.blit(self.trashCanFront, (1000 * SCALE_X, 600 * SCALE_Y))
         pygame.display.update()
 
     """
@@ -191,7 +195,7 @@ class GameScene(SceneBase):
         Create the in-game menu
         """
 
-        P, K, Y = 300, 5, 30
+        P, K, Y = 300 * SCALE_X, 5 * SCALE_X, 30 * SCALE_Y
         currX = P
         self.quit_button = Button(self.context, "Quit")
         self.quit_button.setPen(self.context.font)
@@ -220,7 +224,7 @@ class GameScene(SceneBase):
         currX += self.home_button.width + K
         self.levelDisplay = Text(self.context, "Level: {}".format(self.level))
         self.levelDisplay.setPen(self.context.bold_font)
-        self.levelDisplay.setLocation(currX + K, Y+5)
+        self.levelDisplay.setLocation(currX + K, Y+(5 * SCALE_Y))
         self.levelDisplay.setColor((0, 0, 0))
         self.buttons += [self.quit_button, self.restart_button, self.home_button, self.levelDisplay]
 
@@ -271,7 +275,7 @@ class GameScene(SceneBase):
         Y = 0
         for _ in xrange(0, 11-self.level):
             pizza = Pizza(self.context)
-            pizza.setLocation(140, 620-Y)
+            pizza.setLocation(140 * SCALE_X, (620-Y) * SCALE_Y)
             Y += 5
             self.pizzas += [pizza]
         if len(self.pizzas) > 0:
@@ -332,9 +336,9 @@ class GameScene(SceneBase):
         Create the the ui for topping selection
         """
 
-        X = 600
-        Y = 650
-        K = 10
+        X = 600 * SCALE_X
+        Y = 650 * SCALE_Y
+        K = 10 * SCALE_X
         self.cheeseBtn = Button(self.context, "Cheese")
         self.cheeseBtn.setBackgroundImg(self.context.button_bg, STATE.NORMAL)
         self.cheeseBtn.setBackgroundImg(self.context.button_bg_active, STATE.ACTIVE)
@@ -363,21 +367,21 @@ class GameScene(SceneBase):
         Create the ui for the fractions options
         """
 
-        X = 590
-        Y = 620
-        K = 4
-        height = 50
-        textOffset = 6
+        X = 590 * SCALE_X
+        Y = 620 * SCALE_Y
+        K = 4 * SCALE_X
+        height = 50 * SCALE_Y
+        textOffset = 6 * SCALE_X
         
         toppings = ["Cheese", "Pepperoni", "Mushroom", "Pineapple"]
         for i in range(0, len(toppings)):
             text = Text(self.context, toppings[i])
             text.setPen(self.context.font)
             text.setColor((0, 0, 0))
-            text.setLocation(X, 620 + i * height + textOffset)
+            text.setLocation(X, 620 * SCALE_Y + i * height + textOffset)
             self.texts.append(text)
             
-        X = X + 130
+        X = X + 130 * SCALE_X
 
         increaseCallbacks = [self.increaseCheeseTopping, self.increaseMushroomTopping,
                              self.increasePepperoniTopping, self.increasePineappleTopping]
@@ -391,20 +395,21 @@ class GameScene(SceneBase):
             leftButton.setBackgroundImg(self.context.button_bg, STATE.NORMAL)
             leftButton.setBackgroundImg(self.context.button_bg_active, STATE.ACTIVE)
             leftButton.setOnLeftClick(decreaseCallbacks[i])
-            leftButton.setLocation(X + K * 3, Y + height * i)
-            leftButton.width = 30
+            leftButton.setLocation(X + K * 3 * SCALE_X, Y + height * i)
+            leftButton.width = 30 * SCALE_X
             leftButton.dirty = True
 
             fracText = Text(self.context, "0")
             fracText.centered = True
-            fracText.setLocation(leftButton.location[0] + leftButton.width + 35,
+            fracText.setLocation(leftButton.location[0] + leftButton.width \
+                                 + 35 * SCALE_X,
                                  Y + textOffset + height * i)
             rightButton = Button(self.context, ">")
             rightButton.setBackgroundImg(self.context.button_bg, STATE.NORMAL)
             rightButton.setBackgroundImg(self.context.button_bg_active, STATE.ACTIVE)
             rightButton.setOnLeftClick(increaseCallbacks[i])
-            rightButton.setLocation(leftButton.location[0] + 100, Y + height * i)
-            rightButton.width = 30
+            rightButton.setLocation(leftButton.location[0] + 100 * SCALE_X, Y + height * i)
+            rightButton.width = 30 * SCALE_X
             rightButton.dirty = True
 
             self.fractionTexts += [fracText]
@@ -502,7 +507,7 @@ class GameScene(SceneBase):
         """
 
         self.cook = Button(self.context, "Cook")
-        self.cook.setLocation(120, 770)
+        self.cook.setLocation(120 * SCALE_X, 770 * SCALE_Y)
         self.cook.setBackgroundImg(self.context.button_bg, STATE.NORMAL)
         self.cook.setBackgroundImg(self.context.button_bg_active, STATE.ACTIVE)
         self.cook.setOnLeftClick(self.handleCooking)
@@ -519,7 +524,7 @@ class GameScene(SceneBase):
                 self.current_pizza.setPerfect()
                 self.levelUp()
             else:
-                self.current_pizza.moveToTrash((1000, 600), self.trashCan)
+                self.current_pizza.moveToTrash((1000 * SCALE_X, 600 * SCALE_Y), self.trashCan)
             for i in range(1, len(validity)):
                 if self.context.difficulty == "Advanced":
                     self.message_bubbles[i-1].messages = []
@@ -544,8 +549,8 @@ class GameScene(SceneBase):
         for x in range(0, i):
             bubble = MessageBubble(self.context)
             bubble.flip = True
-            bubble.setLocation(exes[x], whys[x])
-            bubble.setScale(300, 150)
+            bubble.setLocation(exes[x] * SCALE_X, whys[x] * SCALE_Y)
+            bubble.setScale(300 * SCALE_X, 150 * SCALE_Y)
             self.message_bubbles.append(bubble)
         
     def createTrashCan(self):

@@ -1,6 +1,10 @@
 import pygame
 from . import SceneBase
 from game.objects import Text, Button, STATE
+from gi.repository import Gdk
+
+SCALE_X = Gdk.Screen.width() / 1200
+SCALE_Y = Gdk.Screen.height() / 900
 
 class HelpScene(SceneBase):
     def __init__(self, context):
@@ -44,7 +48,7 @@ class HelpScene(SceneBase):
 
 
     def createGameMenu(self):
-        P, K, Y = 300, 5, 30
+        P, K, Y = 300 * SCALE_X, 5 * SCALE_X, 30 * SCALE_Y
         currX = P
         self.quit_button = Button(self.context, "Quit")
         self.quit_button.setPen(self.context.font)

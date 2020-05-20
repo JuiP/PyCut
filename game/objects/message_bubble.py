@@ -1,6 +1,10 @@
 import pygame
 from game.events import Clickable, Hoverable
 from . import STATE, STYLES_NAMES as SM
+from gi.repository import Gdk
+
+SCALE_X = Gdk.Screen.width() / 1200
+SCALE_Y = Gdk.Screen.height() / 900
 
 class MessageBubble(Hoverable):
     """docstring for Text"""
@@ -16,7 +20,7 @@ class MessageBubble(Hoverable):
         self.pen = self.context.bold_font
         self.messages = []
         self.flip = False
-        self.setLocation(180, 100)
+        self.setLocation(180 * SCALE_X, 100 * SCALE_Y)
         self.width = self.background.get_width()
         self.height = self.background.get_height()
         self.drawing = None
@@ -31,8 +35,8 @@ class MessageBubble(Hoverable):
             self.drawing.blit(pygame.transform.flip(self.background, True, False), (0,0))
         else:
             self.drawing.blit(self.background, (0,0))
-        x = self.width * 0.05
-        y = self.height - 62
+        x = self.width * 0.05 * SCALE_X
+        y = self.height - (62 * SCALE_Y)
         limit = len(self.messages)
         for i in xrange(limit):
             self.drawing.blit(self.messages[limit-i-1], (x, y))
