@@ -8,8 +8,8 @@ from . import SceneBase
 import cProfile
 from gi.repository import Gdk
 
-SCALE_X = Gdk.Screen.width() / 1200
-SCALE_Y = Gdk.Screen.height() / 900
+SCALE_X = Gdk.Screen.width() / 1200.0
+SCALE_Y = Gdk.Screen.height() / 900.0
 
 class GameScene(SceneBase):
     """
@@ -224,7 +224,7 @@ class GameScene(SceneBase):
         currX += self.home_button.width + K
         self.levelDisplay = Text(self.context, "Level: {}".format(self.level))
         self.levelDisplay.setPen(self.context.bold_font)
-        self.levelDisplay.setLocation(currX + K, Y+(5 * SCALE_Y))
+        self.levelDisplay.setLocation(currX + K, Y + 5)
         self.levelDisplay.setColor((0, 0, 0))
         self.buttons += [self.quit_button, self.restart_button, self.home_button, self.levelDisplay]
 
@@ -378,7 +378,7 @@ class GameScene(SceneBase):
             text = Text(self.context, toppings[i])
             text.setPen(self.context.font)
             text.setColor((0, 0, 0))
-            text.setLocation(X, 620 * SCALE_Y + i * height + textOffset)
+            text.setLocation(X, 620 * SCALE_X + i * height + textOffset)
             self.texts.append(text)
             
         X = X + 130 * SCALE_X
@@ -395,7 +395,7 @@ class GameScene(SceneBase):
             leftButton.setBackgroundImg(self.context.button_bg, STATE.NORMAL)
             leftButton.setBackgroundImg(self.context.button_bg_active, STATE.ACTIVE)
             leftButton.setOnLeftClick(decreaseCallbacks[i])
-            leftButton.setLocation(X + K * 3 * SCALE_X, Y + height * i)
+            leftButton.setLocation(X + K * 3, Y + height * i)
             leftButton.width = 30 * SCALE_X
             leftButton.dirty = True
 

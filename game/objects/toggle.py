@@ -1,6 +1,10 @@
 import pygame
 from game.events import Togglable
 from . import STATE, STYLES_NAMES as SM
+from gi.repository import Gdk
+
+SCALE_X = Gdk.Screen.width() / 1200
+SCALE_Y = Gdk.Screen.height() / 900
 
 class Toggle(Togglable):
     """docstring for Button"""
@@ -121,7 +125,7 @@ class Toggle(Togglable):
     def setBackgroundImg(self, bg_img, state=STATE.NORMAL):
         self.style[state][SM.BACKGROUND_IMG] = bg_img
         if state == STATE.NORMAL:
-            self.setSize(bg_img.get_width(), bg_img.get_height())
+            self.setSize(bg_img.get_width() * SCALE_X, bg_img.get_height() * SCALE_Y)
 
     """
     x,y are the center points of the button.

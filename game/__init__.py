@@ -4,6 +4,9 @@ import os
 import gi
 from gi.repository import Gdk
 
+SCALE_X = Gdk.Screen.width() / 1200.0
+SCALE_Y = Gdk.Screen.height() / 900.0
+
 from . import scenes, events, objects
 
 class PyCutGame():
@@ -29,26 +32,64 @@ class PyCutGame():
 
     def load_assets(self):
         self.game_icon = self.load_image("PyCut_icon.png")
+        self.game_icon = pygame.transform.scale(self.game_icon,
+                                                (int(55 * SCALE_X),int(55 * SCALE_Y)))
         self.font_path  = os.path.join(self.basePath, "assets/font/Roboto-Thin.ttf")
         self.bold_font_path  = os.path.join(self.basePath, "assets/font/Roboto-Regular.ttf")
         self.shop_background = self.load_image("Background.png")
+        self.shop_background = pygame.transform.scale(self.shop_background,
+                                                (int(1200 * SCALE_X),int(900 * SCALE_Y)))
         self.counter_top = self.load_image("Countertop.png")
+        self.counter_top = pygame.transform.scale(self.counter_top,
+                                                (int(1200 * SCALE_X),int(900 * SCALE_Y)))
         self.help_img = self.load_image("help.png")
+        self.help_img = pygame.transform.scale(self.help_img,
+                                                (int(1000 * SCALE_X),int(561 * SCALE_Y)))
         self.plain_pizza = self.load_image("blank_pizza.png")
+        self.plain_pizza = pygame.transform.scale(self.plain_pizza,
+                                                (int(520 * SCALE_X),int(520 * SCALE_Y)))
         self.button_bg = self.load_image("red_button01.png")
+        self.button_bg = pygame.transform.scale(self.button_bg,
+                                                (int(190 * SCALE_X),int(49 * SCALE_Y)))
         self.button_bg_active = self.load_image("red_button02.png")
+        self.button_bg_active = pygame.transform.scale(self.button_bg_active,
+                                                (int(190 * SCALE_X),int(49 * SCALE_Y)))
         self.message_bubble_img = self.load_image("message_bubble.png")
+        self.message_bubble_img = pygame.transform.scale(self.message_bubble_img,
+                                                (int(850 * SCALE_X),int(151 * SCALE_Y)))
         self.cheese_img = self.load_image("cheese.png")
+        self.cheese_img = pygame.transform.scale(self.cheese_img,
+                                                (int(325 * SCALE_X),int(225 * SCALE_Y)))
         self.mushroom_img = self.load_image("mushroom.png")
+        self.mushroom_img = pygame.transform.scale(self.mushroom_img,
+                                                (int(280 * SCALE_X),int(280 * SCALE_Y)))
         self.pepperoni_img = self.load_image("pepperoni.png")
+        self.pepperoni_img = pygame.transform.scale(self.pepperoni_img,
+                                                (int(210 * SCALE_X),int(210 * SCALE_Y)))
         self.pineapple_img = self.load_image("pineapple.png")
+        self.pineapple_img = pygame.transform.scale(self.pineapple_img,
+                                                (int(280 * SCALE_X),int(280 * SCALE_Y)))
         self.trash_can_img = self.load_image("trash_can.png")
+        self.trash_can_img = pygame.transform.scale(self.trash_can_img,
+                                                (int(245 * SCALE_X),int(299 * SCALE_Y)))
         self.trash_can_front_img = self.load_image("trash_can_front.png")
+        self.trash_can_front_img = pygame.transform.scale(self.trash_can_front_img,
+                                                (int(245 * SCALE_X),int(299 * SCALE_Y)))
         self.trash_can_back_img = self.load_image("trash_can_back.png")
+        self.trash_can_back_img = pygame.transform.scale(self.trash_can_back_img,
+                                                (int(245 * SCALE_X),int(299 * SCALE_Y)))
         self.character_1 = self.load_image("Character1.png")
+        self.character_1 = pygame.transform.scale(self.character_1,
+                                                (int(232 * SCALE_X),int(348 * SCALE_Y)))
         self.character_2 = self.load_image("Character2.png")
+        self.character_2 = pygame.transform.scale(self.character_2,
+                                                (int(236 * SCALE_X),int(345 * SCALE_Y)))
         self.character_3 = self.load_image("Character3.png")
+        self.character_3 = pygame.transform.scale(self.character_3,
+                                                (int(235 * SCALE_X),int(349 * SCALE_Y)))
         self.character_4 = self.load_image("Character4.png")
+        self.character_4 = pygame.transform.scale(self.character_4,
+                                                (int(232 * SCALE_X),int(354 * SCALE_Y)))
         self.game_characters = [self.character_1, self.character_2,
                                 self.character_3, self.character_4]
         self.game_toppings = [self.cheese_img, self.mushroom_img,
@@ -58,12 +99,12 @@ class PyCutGame():
         self.screen = pygame.display.get_surface()
         self.clock = pygame.time.Clock()
         self.load_assets()
-        self.font_large = pygame.font.Font(self.font_path, 72)
-        self.font = pygame.font.Font(self.font_path, 24)
-        self.font_small = pygame.font.Font(self.font_path, 14)
-        self.bold_font_large = pygame.font.Font(self.bold_font_path, 72)
-        self.bold_font = pygame.font.Font(self.bold_font_path, 24)
-        self.bold_font_small = pygame.font.Font(self.bold_font_path, 14)
+        self.font_large = pygame.font.Font(self.font_path, int(72 * SCALE_X))
+        self.font = pygame.font.Font(self.font_path, int(24 * SCALE_X))
+        self.font_small = pygame.font.Font(self.font_path, int(14 * SCALE_X))
+        self.bold_font_large = pygame.font.Font(self.bold_font_path, int(72 * SCALE_X))
+        self.bold_font = pygame.font.Font(self.bold_font_path, int(24 * SCALE_X))
+        self.bold_font_small = pygame.font.Font(self.bold_font_path, int(14 * SCALE_X))
         pygame.display.set_caption(self.title)
         pygame.display.set_icon(self.game_icon)
         self.difficulty = "Easy"

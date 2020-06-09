@@ -3,8 +3,8 @@ from . import SceneBase, GameScene, HelpScene, DifficultyScene
 from game.objects import Text, Button, STATE
 from gi.repository import Gdk
 
-SCALE_X = Gdk.Screen.width() / 1200
-SCALE_Y = Gdk.Screen.height() / 900
+SCALE_X = Gdk.Screen.width() / 1200.0
+SCALE_Y = Gdk.Screen.height() / 900.0
 
 class TitleScene(SceneBase):
     def __init__(self, context):
@@ -98,13 +98,13 @@ class TitleScene(SceneBase):
         self.score_msg.setPen(self.context.bold_font)
         self.score_msg.setColor((244, 101, 36))
         self.score_msg.setLocation((self.context.width - self.score_msg.width) // 2,
-                                    ((self.context.height - self.score_msg.height) // 2) + self.title.height + self.start_button.height + self.help_button.height + self.difficulty_button.height+ 15 * SCALE_Y)
+                                    ((self.context.height - self.score_msg.height) // 2) + self.title.height + self.start_button.height + self.help_button.height + self.difficulty_button.height+ 15)
     def createDifficultyText(self):
         self.difficulty_msg = Text(self.context, "Current Difficulty: " + self.context.difficulty)
         self.difficulty_msg.setPen(self.context.bold_font)
         self.difficulty_msg.setColor((244, 101, 36))
         self.difficulty_msg.setLocation((self.context.width - self.difficulty_msg.width) // 2,
-                                    ((self.context.height - self.difficulty_msg.height) // 2) + self.title.height + self.start_button.height + self.help_button.height + self.difficulty_button.height + self.score_msg.height + 15 * SCALE_Y)
+                                    ((self.context.height - self.difficulty_msg.height) // 2) + self.title.height + self.start_button.height + self.help_button.height + self.difficulty_button.height + self.score_msg.height + 15)
 
     """
     helper methods below this point

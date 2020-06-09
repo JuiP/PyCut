@@ -6,8 +6,8 @@ from game.objects import Text, Button, STATE
 from . import SceneBase
 from gi.repository import Gdk
 
-SCALE_X = Gdk.Screen.width() / 1200
-SCALE_Y = Gdk.Screen.height() / 900
+SCALE_X = Gdk.Screen.width() / 1200.0
+SCALE_Y = Gdk.Screen.height() / 900.0
 
 class DifficultyScene(SceneBase):
     """

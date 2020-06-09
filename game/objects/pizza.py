@@ -4,8 +4,8 @@ from .rangable import Rangable
 import random
 from gi.repository import Gdk
 
-SCALE_X = Gdk.Screen.width() / 1200
-SCALE_Y = Gdk.Screen.height() / 900
+SCALE_X = Gdk.Screen.width() / 1200.0
+SCALE_Y = Gdk.Screen.height() / 900.0
 
 class Pizza(Rangable):
     """docstring for Pizza"""
@@ -38,7 +38,7 @@ class Pizza(Rangable):
     def draw(self):
         
         surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        pizza_img = pygame.transform.scale(self.context.plain_pizza, (self.width, self.height))
+        pizza_img = pygame.transform.scale(self.context.plain_pizza, (int(self.width), int(self.height)))
         surf.blit(pizza_img, (0,0))
         for i in range(0, len(self.toppings)):
             if self.toppings[i] > 0:
@@ -60,7 +60,7 @@ class Pizza(Rangable):
                 self.trashed = True
                 self.trashing = False
             else:
-                self.setLocation(self.trash_pos[0] + 50, self.y + ((S)*A) )
+                self.setLocation((self.trash_pos[0] + 50) * SCALE_X, self.y + ((S)*A) * SCALE_Y )
         if screen:
             if self.dirty:
                 self.draw()
@@ -73,7 +73,7 @@ class Pizza(Rangable):
     """
     def drawTopping(self, surf, i, pad=0):
         #needs serious refactoring
-        topping_img = pygame.transform.scale(self.context.game_toppings[i], (self.width/4, self.height/4))
+        topping_img = pygame.transform.scale(self.context.game_toppings[i], (int(self.width/4), int(self.height/4)))
         if self.context.difficulty == "Advanced":
             amount = self.context.fractions[self.toppings[i]]
         else:
@@ -81,7 +81,7 @@ class Pizza(Rangable):
         #center portion
         surf.blit(topping_img, ( (surf.get_width()/2) - (topping_img.get_width()/2), (surf.get_height()/2) - (topping_img.get_height()/2)))
         #top portion
-        w,h = (surf.get_width()/6) + pad, surf.get_height()/6
+        w,h = (surf.get_width()/6) + pad * SCALE_X, surf.get_height()/6
         if amount > 0:
             surf.blit( pygame.transform.rotate(topping_img, 45), ( w, h ))
         if amount > 0.25:
@@ -101,9 +101,9 @@ class Pizza(Rangable):
         if not(self.trashing or self.trashed):
             if trash_pos and trash_can:
                 self.trash_pos = trash_pos
-                self.trash_can = pygame.Rect((trash_pos[0], trash_pos[1]+self.height), (trash_can.get_width(), trash_can.get_height()))
+                self.trash_can = pygame.Rect((trash_pos[0] * SCALE_X, trash_pos[1] * SCALE_Y + self.height), (trash_can.get_width(), trash_can.get_height()))
                 self.trashing = True
-                self.setLocation(trash_pos[0] + (50 * SCALE_X), 200 * SCALE_Y)
+                self.setLocation(trash_pos[0] * SCALE_X + (50 * SCALE_X), 200 * SCALE_Y)
             else:
                 print("Error: expected a trash_pos, trash_can got {}, {}".format(trash_pos, trash_can))
 

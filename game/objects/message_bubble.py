@@ -3,8 +3,9 @@ from game.events import Clickable, Hoverable
 from . import STATE, STYLES_NAMES as SM
 from gi.repository import Gdk
 
-SCALE_X = Gdk.Screen.width() / 1200
-SCALE_Y = Gdk.Screen.height() / 900
+
+SCALE_X = Gdk.Screen.width() / 1200.0
+SCALE_Y = Gdk.Screen.height() / 900.0
 
 class MessageBubble(Hoverable):
     """docstring for Text"""
