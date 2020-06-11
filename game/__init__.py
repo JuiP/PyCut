@@ -1,11 +1,6 @@
 import pygame
 import traceback
 import os
-import gi
-from gi.repository import Gdk
-
-SCALE_X = Gdk.Screen.width() / 1200.0
-SCALE_Y = Gdk.Screen.height() / 900.0
 
 from . import scenes, events, objects
 
@@ -21,14 +16,20 @@ class PyCutGame():
         #pygame.font.init()
         #pygame.mixer.init(44100)
         ########################
-        self.width = Gdk.Screen.width()
-        self.height = Gdk.Screen.height()
+        self.width = 1200
+        self.height = 900
         self.fps = 15
         self.title = "PyCut"
         self.quit_attempt = False
         self.level = 1
         self.total_good_pizza = 0
         self.poll_cb = poll_cb
+
+    def scaling_constants(self, screen):
+        self.width, self.height = screen.get_width(), screen.get_height()
+        scale_x = self.width / 1200.0
+        scale_y = self.height / 900.0
+        return scale_x, scale_y
 
     def load_assets(self):
         self.game_icon = self.load_image("PyCut_icon.png")
@@ -97,6 +98,8 @@ class PyCutGame():
 
     def game_loop(self):
         self.screen = pygame.display.get_surface()
+        global SCALE_X, SCALE_Y
+        SCALE_X, SCALE_Y = self.scaling_constants(self.screen)
         self.clock = pygame.time.Clock()
         self.load_assets()
         self.font_large = pygame.font.Font(self.font_path, int(72 * SCALE_X))

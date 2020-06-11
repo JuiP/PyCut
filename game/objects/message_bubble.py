@@ -2,7 +2,10 @@ import pygame
 from game.events import Clickable, Hoverable
 from . import STATE, STYLES_NAMES as SM
 from gi.repository import Gdk
+from game import PyCutGame as g
 
+scale_x, scale_y = g.scaling_constants(g.screen)
+print(scale_x, scale_y)
 
 SCALE_X = Gdk.Screen.width() / 1200.0
 SCALE_Y = Gdk.Screen.height() / 900.0
